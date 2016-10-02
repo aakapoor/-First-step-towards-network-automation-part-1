@@ -1,0 +1,61 @@
+#! /usr/bin/expect
+# above command is to tell shell that we using expect for this script
+
+# open host.txt and copy its content
+set HostFile [open "host.txt"]
+set hosts [split [read $HostFile] "\n"]
+close $HostFile
+
+# open command.txt and copy its content
+set CommandFile [open "command.txt"]
+set commands [split [read $CommandFile] "\n"]
+close $CommandFile
+
+# open alias.txt and copy its content
+set AliasFile [open "alias.txt"]
+set alias [split [read $AliasFile] "\n"]
+close $AliasFile
+
+# define filename + location where you want to save logs
+log_file log.txt
+
+# set timeout to infinite, you may change it as per requirement
+set timeout -1
+
+# open bash 
+spawn bash
+
+# expect $ as prompt you may change it as per requirement
+expect "*$ "
+send "\r"
+
+# for loop to apply all alias in file alias.txt
+foreach alias $alias {
+ expect "*$ "
+ send "$alias\r"
+}
+
+# for loop to connect all host in file host.txt
+foreach host $hosts {
+ expect "*$ "
+ send "$host\r"
+# send enter once connected to device
+ send "\r"
+# send one more enter after we have prompt 
+ expect "*>"
+ send "\r"
+
+# for loop to apply all command in command.txt
+ foreach command $commands {
+  expect "*>"
+  send "$command\r"
+ }
+
+}
+
+
+expect "*$ "
+send "\r"
+
+# this close log file
+log_file
