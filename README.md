@@ -16,3 +16,7 @@ Disclaimer: This is for educational purpose only do not use this script on produ
 Most route-servers restrict running script, please check before running script.
 
 This script use four files
+
+Check below link for more details 
+
+http://www.linkedin.com/pulse/first-step-towards-network-automation-part-1-aashish-kapoor
